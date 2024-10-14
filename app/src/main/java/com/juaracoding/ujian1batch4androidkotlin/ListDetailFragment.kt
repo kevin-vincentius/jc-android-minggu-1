@@ -1,3 +1,4 @@
+
 package com.juaracoding.ujian1batch4androidkotlin
 
 import android.os.Build
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,6 +35,7 @@ class ListDetailFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
             article = it.getParcelable("param1",Article::class.java)!!
         }
+
     }
 
     override fun onCreateView(
@@ -45,12 +48,13 @@ class ListDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         if(article != null) {
-
-
             view.findViewById<ImageView>(R.id.articleDetailImage)
                 .setImageResource(article.imageResourceId)
-           //tambahkan sisanya disini
+            view.findViewById<TextView>(R.id.articleDetailTitle).text = article.title
+            view.findViewById<TextView>(R.id.articleDetailDescription).text = article.description
+            view.findViewById<TextView>(R.id.articleDetailOverview).text = article.overview
         }
     }
 

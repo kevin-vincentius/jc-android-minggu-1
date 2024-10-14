@@ -1,6 +1,8 @@
 package com.juaracoding.ujian1batch4androidkotlin
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "ARTICLE"
+private const val ARG_PARAM1 = "Article"
 private const val ARG_PARAM2 = "param2"
 
 /**
@@ -48,8 +50,18 @@ class ListArtisFragment : Fragment() {
         // Contoh data
         articles = listOf(
             // (Sesuaikan dengan sumber daya gambar Anda)
-            Article(R.drawable.chelsea, "Chelsea Islan", "Tak hanya memiliki paras yang cantik, Chelsea Islan juga mempunyai segudang prestasi", "Aktris muda cantik yang berprestasi serta baru saja dilamar oleh Rob Clinton ini merupakan seorang wanita keturunan Amerika Serikat. Memiliki wajah blasteran yang begitu cantik, tidak heran jika Chelsea Islan kemudian sukses masuk sebagai salah satu nominasi perempuan tercantik versi TC Candler selama tiga tahun berturut-turut, yaitu pada tahun 2018, 2019, dan 2020."),
-            Article(R.drawable.lyorda,"Lyorda Ginting","Lyodra Ginting adalah salah satu aktris yang berhasil masuk ke dalam daftar 100 wajah tercantik pada tahun 2021 dari versi TC Candler","Selain memiliki paras yang cantik, ia juga merupakan pemenang pada ajang pencarian bakat Indonesian Idol di tahun 2020. Setelah mengetahui dirinya masuk ke dalam daftar tersebut, Lyodra juga memberikan respons melalui unggahan pada akun instagramnya."),
+            Article(
+                R.drawable.chelsea,
+                "Chelsea Islan",
+                "Tak hanya memiliki paras yang cantik, Chelsea Islan juga mempunyai segudang prestasi",
+                "Aktris muda cantik yang berprestasi serta baru saja dilamar oleh Rob Clinton ini merupakan seorang wanita keturunan Amerika Serikat. Memiliki wajah blasteran yang begitu cantik, tidak heran jika Chelsea Islan kemudian sukses masuk sebagai salah satu nominasi perempuan tercantik versi TC Candler selama tiga tahun berturut-turut, yaitu pada tahun 2018, 2019, dan 2020."
+            ),
+            Article(
+                R.drawable.lyorda,
+                "Lyorda Ginting",
+                "Lyodra Ginting adalah salah satu aktris yang berhasil masuk ke dalam daftar 100 wajah tercantik pada tahun 2021 dari versi TC Candler",
+                "Selain memiliki paras yang cantik, ia juga merupakan pemenang pada ajang pencarian bakat Indonesian Idol di tahun 2020. Setelah mengetahui dirinya masuk ke dalam daftar tersebut, Lyodra juga memberikan respons melalui unggahan pada akun instagramnya."
+            ),
             Article(
                 R.drawable.citra_kirana,
                 "Citra Kirana",
@@ -98,36 +110,22 @@ class ListArtisFragment : Fragment() {
                 "Dikenal lewat sinetron, Natasha Wilona kini menjadi salah satu aktris muda paling populer.",
                 "Natasha Wilona adalah seorang aktris Indonesia yang mulai dikenal setelah bermain dalam sinetron 'Anak Jalanan'. Dengan talenta dan pesonanya, ia menjadi salah satu aktris muda paling dicari di industri hiburan."
             )
-
-
         )
 
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.listArticle)
-
         recyclerView.layoutManager = LinearLayoutManager(context)
-
         recyclerView.adapter = ArticleAdapter(articles) { article ->
-
             val orientation = resources.configuration.orientation
-            if(orientation == //tambahkan disini jika landscape) {
-               parentFragmentManager.beginTransaction()
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                parentFragmentManager.beginTransaction()
                     .replace(R.id.sideDetail, ListDetailFragment.newInstance(article, ""))
                     .commit()
-            }else {
+            } else {
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.frmFragment, ListDetailFragment.newInstance(article,""))
-                    .addToBackStack(null)
-                    .commit()
+                    .replace(R.id.frmFragment, ListDetailFragment.newInstance(article, ""))
+                    .addToBackStack(null).commit()
             }
-
-
-
-
         }
-
-
-
     }
 
     companion object {

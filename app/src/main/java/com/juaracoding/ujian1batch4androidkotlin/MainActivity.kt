@@ -6,21 +6,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 
-
-
 class MainActivity : AppCompatActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.setTitle("10 Model Indonesia");
 
-
-
         val orientation = resources.configuration.orientation
 
-        if(orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
+        if (orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.sideList, ListArtisFragment.newInstance("",""))
                 .commit()
@@ -28,18 +22,11 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.sideDetail, ListDetailFragment.newInstance(Article(R.drawable.chelsea,"Chelsea Islan","",""),""))
                 .commit()
-        }else{
+        } else {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.frmFragment, ListArtisFragment.newInstance("",""))
-
                 .commit()
-
-
         }
-
-
-
-
     }
 
     // Tombol untuk membuka halaman About

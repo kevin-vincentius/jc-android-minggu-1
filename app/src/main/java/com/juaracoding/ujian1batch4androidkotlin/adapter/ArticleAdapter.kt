@@ -1,5 +1,7 @@
 package com.juaracoding.ujian1batch4androidkotlin
 
+import android.content.Intent
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,15 +10,22 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class ArticleAdapter(private val articles: List<Article>, private val clickListener: (Article) -> Unit) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+class ArticleAdapter(
+    private val articles: List<Article>, private val onItemClick: (Article) -> Unit
+) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(article: Article) {
-            itemView.findViewById<ImageView>(R.id.articleImage).setImageResource(//tambahakan disini)
-            itemView.findViewById<TextView>(R.id.articleTitle).text = //tambahkan disini
-            itemView.findViewById<TextView>(R.id.articleOverview).text = //tambahkan disini
+        val title: TextView = itemView.findViewById(R.id.articleTitle)
+        val image: ImageView = itemView.findViewById(R.id.articleImage)
+        val overview: TextView = itemView.findViewById(R.id.articleOverview)
 
-            itemView.setOnClickListener { clickListener(article) }
+        fun bind(article: Article) {
+            title.text = article.title
+            overview.text = article.overview
+            image.setImageResource(article.imageResourceId)
+            itemView.setOnClickListener {
+                onItemClick(article)
+            }
         }
     }
 
@@ -29,5 +38,7 @@ class ArticleAdapter(private val articles: List<Article>, private val clickListe
         holder.bind(articles[position])
     }
 
-    override fun getItemCount() = //tambahkan disini
+    override fun getItemCount(): Int { //tambahkan disini
+        return articles.size
+    }
 }
