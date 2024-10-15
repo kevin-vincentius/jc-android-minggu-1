@@ -1,13 +1,16 @@
 
 package com.juaracoding.ujian1batch4androidkotlin
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -33,9 +36,11 @@ class ListDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param2 = it.getString(ARG_PARAM2)
-            article = it.getParcelable("param1",Article::class.java)!!
+//            @Suppress("DEPRECATION")
+            article = it.getParcelable(ARG_PARAM1)!!
+            Log.d("Detail fragment article", "Article received: $article")
+//            article = it.getParcelable(ARG_PARAM1) ?: throw IllegalStateException("Article data not found in arguments")
         }
-
     }
 
     override fun onCreateView(
@@ -49,6 +54,13 @@ class ListDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val shareButton = view.findViewById<Button>(R.id.btnShare)
+        shareButton.setOnClickListener {
+            if (article != null) {
+                shareArticle(article)
+            }
+        }
+
         if(article != null) {
             view.findViewById<ImageView>(R.id.articleDetailImage)
                 .setImageResource(article.imageResourceId)
@@ -56,6 +68,18 @@ class ListDetailFragment : Fragment() {
             view.findViewById<TextView>(R.id.articleDetailDescription).text = article.description
             view.findViewById<TextView>(R.id.articleDetailOverview).text = article.overview
         }
+
+
+    }
+
+    private fun shareArticle(article: Article) {
+
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "${article.title}\n${article.description}")
+            type = "text/plain"
+        }
+        startActivity(Intent.createChooser(shareIntent, "Share using"))
     }
 
     companion object {

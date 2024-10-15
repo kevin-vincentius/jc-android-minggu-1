@@ -38,7 +38,5 @@ class ArticleAdapter(
         holder.bind(articles[position])
     }
 
-    override fun getItemCount(): Int { //tambahkan disini
-        return articles.size
-    }
+    override fun getItemCount() =  articles.size
 }

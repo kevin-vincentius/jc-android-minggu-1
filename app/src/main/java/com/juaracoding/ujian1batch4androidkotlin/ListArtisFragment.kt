@@ -114,6 +114,7 @@ class ListArtisFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.listArticle)
         recyclerView.layoutManager = LinearLayoutManager(context)
+
         recyclerView.adapter = ArticleAdapter(articles) { article ->
             val orientation = resources.configuration.orientation
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -123,7 +124,8 @@ class ListArtisFragment : Fragment() {
             } else {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.frmFragment, ListDetailFragment.newInstance(article, ""))
-                    .addToBackStack(null).commit()
+                    .addToBackStack(null)
+                    .commit()
             }
         }
     }
